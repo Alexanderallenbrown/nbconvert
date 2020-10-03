@@ -35,7 +35,7 @@ class WebPDFExporter(HTMLExporter):
                                "Please use '--allow-chromium-download' to allow downloading one.")
         return launch
 
-    def run_pyppeteer(self, html):
+    def run_pyppeteer(self, html, loadtimeout = 100000):
         """Run pyppeteer."""
 
         async def main():
@@ -46,7 +46,7 @@ class WebPDFExporter(HTMLExporter):
             )
             page = await browser.newPage()
             await page.waitFor(100)
-            await page.goto('data:text/html,'+html, waitUntil='networkidle0')
+            await page.goto('data:text/html,'+html, waitUntil='networkidle0',timeout=loadtimeout)
             await page.waitFor(100)
 
             # Floating point precision errors cause the printed
